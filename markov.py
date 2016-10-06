@@ -57,7 +57,11 @@ def make_text(chains):
         key = (key[1], word)
 
     our_tweet = " ".join(words)
-    our_tweet = our_tweet[:140]
+    our_tweet = our_tweet[:123]
+    our_tweet = our_tweet.split(" ")
+    del our_tweet[-1]
+    our_tweet = " ".join(our_tweet)
+    our_tweet = our_tweet + " #hbgracefall2016"
     
     return our_tweet
 
@@ -76,22 +80,23 @@ def tweet(our_tweet):
 if __name__ == '__main__':
     # Get the filenames from the user through a command line prompt, ex:
     # python markov.py green-eggs.txt shakespeare.txt
-    filenames = sys.argv[1:]
 
     # Open the files and turn them into one long string
-    text = open_and_read_file(filenames)
+    while True:  
+        filenames = sys.argv[1:]  
 
-    # Get a Markov chain
-    chains = make_chains(text)
+        text = open_and_read_file(filenames)
 
-    our_tweet = make_text(chains)
+        # Get a Markov chain
+        chains = make_chains(text)
 
-    tweet(our_tweet)
+        our_tweet = make_text(chains)
 
-    # Your task is to write a new function tweet, that will take chains as input
-    # tweet(chains)
-    choice = raw_input("Enter to tweet again, q to quit >")
-    if choice == "q":
-        pass
-    else:
-        tweet(chains)
+        tweet(our_tweet)
+
+        # Your task is to write a new function tweet, that will take chains as input
+        # tweet(chains)
+        user_choice = raw_input("Enter to tweet again, q to quit ")
+        
+        if user_choice == "q":
+            break
